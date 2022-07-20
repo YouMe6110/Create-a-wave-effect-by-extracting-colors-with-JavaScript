@@ -81,28 +81,64 @@ class App {
             0, 0,
             this.image.width, this.image.height,
             this.imgPos.x, this.imgPos.y,
-            this,this.imgPos.width, this.imgPos.height,
+            this.imgPos.width, this.imgPos.height,
         );
 
-        this.ctx.drawImage(
+        this.tmpctx.drawImage(
             this.image,
             0, 0,
             this.image.width, this.image.height,
             this.imgPos.x, this.imgPos.y,
-            this,this.imgPos.width, this.imgPos.height,
+            this.imgPos.width, this.imgPos.height,
         );
+
+        this.imgData = this.tmpCtx.getImageData(0, 0, this.stageWidth, this.stageHeight);
 
         this.drawDots();
     }
 
     drawDots() {
         this.dots = [];
+
+        this.columns = Math.ceil(this.stageWidth / this.pixelSize);
+        this.rows = Math.ceil(this.stageHeight / this.pixelSize);
+
+        for (let i = 0; i < this.rows; i++) {
+            const y = (i + 0.5) * this.pixelSize;
+            const pixelY = Math.max(Math.min(y, this.stageHeight), 0);
+
+            for (let j = 0; j < this.columns; j++) {
+                const x = (j + 0.5) * this.pixelSize;
+                const pixelX = Math.max(Math.min(x, this.stageWidth), 0);
+
+                const pixelIndex (pixelX + pixelY * this.stageWidth) * 4;
+                const red = this.imgData.data[pixelIndex + 0];
+                const green = this.imgData.data[pixelIndex + 1];
+                const blue = this.imgData.data[pixelIndex + 2];
+
+                const dot = new Dot (
+                    x, y,
+                    this.radius,
+                    this.pixelSize,
+                    red, green, blue,
+                );
+
+                this.dots.push(dot);
+            }
+        }
     }
 
     animate() {
         window.requestAnimationFrame(this.animate.bind(this));
 
         this.ripple.animate(this.ctx);
+
+        for (let i = 0; i < this.dots.length; i++) {
+            const dot = this.dots[i];
+            if () {
+                
+            }
+        }
     }
 
     onClick(e) {
