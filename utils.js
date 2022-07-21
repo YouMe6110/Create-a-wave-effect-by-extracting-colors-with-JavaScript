@@ -6,6 +6,8 @@ export function distance(x1, y1, x2, y2) {
 
 export function collide(x1, y1, x2, y2, radius) {
     if (distance(x1, y1, x2, y2) <= radius) {
-
+        return true;
+    } else {
+        return false;
     }
 }
