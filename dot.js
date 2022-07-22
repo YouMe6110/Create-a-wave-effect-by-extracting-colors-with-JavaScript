@@ -1,11 +1,11 @@
 const PI2 = Math.PI * 2;
-const BOUNCE = 0.82;
+const BOUNCE = 0.8;
 
 export class Dot {
-    constructor(x, y, radius, pixelSize, red, green, blue) {
+    constructor(x, y, radius, pixelSize, red, green, blue, scale) {
         this.x = x;
         this.y = y;
-        this.targetRadius = radius;
+        this.targetRadius = radius / 2;
         this.radius = 0;
         this.radiusV = 0;
         this.pixelSize = pixelSize;
@@ -21,7 +21,7 @@ export class Dot {
         ctx.fillRect(
             this.x - this.pixelSizeHalf,
             this.y - this.pixelSizeHalf,
-            this.pixelSize, this.pixelSize
+            this.pixelSize, this.pixelSize,
         );
 
         const accel = (this.targetRadius - this.radius) / 2;
